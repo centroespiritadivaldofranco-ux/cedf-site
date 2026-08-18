@@ -1,22 +1,5 @@
 services:
   - type: web
-    name: cedf-site-backend
-    runtime: node
-    rootDir: backend
-    plan: free
-    buildCommand: npm install && npx prisma generate
-    startCommand: npx prisma migrate deploy && npm start
-    envVars:
-      - key: DATABASE_URL
-        sync: false
-      - key: ADMIN_TOKEN
-        generateValue: true
-      - key: FRONTEND_ORIGIN
-        value: https://cedf.com.br,https://www.cedf.com.br
-      - key: PORT
-        value: 3002
-
-  - type: web
     name: cedf-site
     runtime: static
     plan: free
@@ -29,3 +12,9 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+
+# O backend (cedf-site/backend) não entra nesse Blueprint: no momento o Render
+# está recusando plan: free para serviços web dentro de Blueprints (erro
+# "no such plan free for service type web"), mesmo o plano Free existindo
+# normalmente. Crie o backend manualmente pelo painel — New > Web Service —
+# onde a opção Free ainda aparece certinho no dropdown. Veja backend/README.md.

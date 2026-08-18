@@ -32,8 +32,31 @@ curl -H "Authorization: Bearer SEU_ADMIN_TOKEN" https://SEU-BACKEND/api/oracoes
 
 Ou simplesmente abrir a tabela `PedidoOracao` direto no painel do Neon/Supabase.
 
-## Publicando
+## Publicando no Render (manual — não usa o Blueprint)
 
-Mesmo fluxo do backend do cedf-tesouraria: Render ou Railway (grátis pra começar),
-banco PostgreSQL no Neon ou Supabase. Depois, defina `VITE_API_URL` no frontend
-apontando para a URL pública desse backend.
+O `render.yaml` na raiz do projeto cuida só do site (frontend). O backend fica de
+fora porque o Render está recusando `plan: free` para serviços web dentro de
+Blueprints no momento (erro "no such plan free for service type web"), mesmo o
+plano Free existindo normalmente. Solução: criar esse serviço manualmente, onde
+a opção Free ainda aparece certinho.
+
+1. No painel do Render: **New +** → **Web Service**
+2. Conecte o repositório `cedf-site`
+3. Preencha:
+   - **Root Directory**: `backend`
+   - **Runtime**: Node
+   - **Build Command**: `npm install && npx prisma generate`
+   - **Start Command**: `npx prisma migrate deploy && npm start`
+   - **Instance Type**: **Free**
+4. Em **Environment Variables**, adicione:
+   - `DATABASE_URL` — a connection string do Neon
+   - `ADMIN_TOKEN` — qualquer string longa e aleatória
+   - `FRONTEND_ORIGIN` — `https://cedf.com.br,https://www.cedf.com.br`
+   - `PORT` — `3002`
+5. Crie o serviço. Quando terminar de subir, copie a URL pública dele (algo como
+   `https://cedf-site-backend.onrender.com`) e atualize a variável `VITE_API_URL`
+   do serviço do site (o que veio do `render.yaml`) com essa URL — depois faça um
+   "Manual Deploy" no site pra ele reconstruir usando a URL certa.
+
+No plano Free, o backend "dorme" depois de 15 minutos sem uso e demora uns
+segundos pra acordar na primeira requisição seguinte — normal, não é erro.
