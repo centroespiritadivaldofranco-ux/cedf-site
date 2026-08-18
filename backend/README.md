@@ -60,3 +60,39 @@ a opção Free ainda aparece certinho.
 
 No plano Free, o backend "dorme" depois de 15 minutos sem uso e demora uns
 segundos pra acordar na primeira requisição seguinte — normal, não é erro.
+
+## Conectando o Instagram do Ângelis
+
+Pré-requisito: o @angelisrefeitorio precisa ser conta profissional (já é) **e**
+estar vinculado a uma Página do Facebook (Instagram → Configurações → Central
+de Contas).
+
+1. Acesse [developers.facebook.com](https://developers.facebook.com/) → **My Apps** → **Create App**
+   - Tipo de app: **Business**
+   - Nome: qualquer um (ex: "CEDF Site")
+2. No painel do app, adicione o produto **Instagram Graph API** (Add Product → Instagram)
+3. Em **App Settings → Basic**, copie o **App Secret** — essa é a variável
+   `INSTAGRAM_APP_SECRET` que você vai colar no Render (serviço do backend)
+4. Vá em **Tools → Graph API Explorer**:
+   - Selecione o app criado
+   - Em "User or Page", escolha a Página do Facebook vinculada ao Ângelis
+   - Em permissões, adicione `instagram_basic` e `pages_show_list`
+   - Clique **Generate Access Token** e faça login/autorize quando pedir
+   - Copie o token gerado (é de curta duração, ~1h — tudo bem, o backend troca
+     por um de 60 dias automaticamente no próximo passo)
+5. Com o backend já publicado no Render, envie esse token pra ele guardar:
+
+   ```bash
+   curl -X POST https://SEU-BACKEND.onrender.com/api/angelis/token \
+     -H "Authorization: Bearer SEU_ADMIN_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{"token":"COLE_O_TOKEN_AQUI"}'
+   ```
+
+   Se dar certo, responde `{"ok":true,"expiraEm":"..."}`. A partir daí o
+   backend renova sozinho a cada vez que o token estiver perto de vencer — não
+   precisa repetir esse passo, a não ser que o token realmente expire (só
+   aconteceria se o site ficasse muito tempo sem receber nenhuma visita, já
+   que a renovação acontece a cada busca de posts).
+
+6. Teste: `GET /api/angelis/posts` deve retornar os posts recentes em JSON.

@@ -17,3 +17,13 @@ model PedidoOracao {
   atendido     Boolean  @default(false)
   criadoEm     DateTime @default(now())
 }
+
+// Guarda o token de acesso do Instagram Graph API (uma única linha).
+// Token de longa duração dura 60 dias e é renovado automaticamente pelo
+// backend antes de expirar — veja src/services/instagram.js.
+model InstagramToken {
+  id           String   @id @default("angelis")
+  accessToken  String
+  expiraEm     DateTime
+  atualizadoEm DateTime @updatedAt
+}

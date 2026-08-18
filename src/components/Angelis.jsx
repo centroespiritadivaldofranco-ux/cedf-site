@@ -1,5 +1,6 @@
 import { ArrowUpRight, ChefHat, AtSign, CalendarCheck } from "lucide-react";
 import Reveal from "./Reveal";
+import AngelisFeed from "./AngelisFeed";
 import { angelis } from "../data/content";
 
 export default function Angelis() {
@@ -53,6 +54,8 @@ export default function Angelis() {
             </Reveal>
           </div>
         </div>
+
+        <AngelisFeed />
       </div>
     </section>
   );
