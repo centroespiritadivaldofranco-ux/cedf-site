@@ -2,7 +2,6 @@ services:
   - type: web
     name: cedf-site
     runtime: static
-    plan: free
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
@@ -13,8 +12,13 @@ services:
         source: /*
         destination: /index.html
 
-# O backend (cedf-site/backend) não entra nesse Blueprint: no momento o Render
-# está recusando plan: free para serviços web dentro de Blueprints (erro
-# "no such plan free for service type web"), mesmo o plano Free existindo
+# Sites estáticos (runtime: static) não usam o campo "plan" — não têm instância
+# própria, são sempre servidos de graça via CDN. Foi justamente declarar
+# "plan: free" aqui que disparava o erro "no such plan free for service type
+# web", mesmo em um site estático.
+#
+# O backend (cedf-site/backend) não entra nesse Blueprint: ele É um serviço web
+# de verdade (roda Node), e o Render está recusando plan: free pra esse tipo de
+# serviço dentro de Blueprints no momento, mesmo o plano Free existindo
 # normalmente. Crie o backend manualmente pelo painel — New > Web Service —
 # onde a opção Free ainda aparece certinho no dropdown. Veja backend/README.md.
