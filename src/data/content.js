@@ -62,7 +62,7 @@ export const activities = [
     title: "Prece Coletiva",
     schedule: "A qualquer momento",
     description:
-      "Deixe o nome completo de quem precisa de oração e tratamento. Sintonizamos com essas pessoas em nossos trabalhos espirituais.",
+      "Deixe o nome completo de quem precisa de oração e tratamento. Sintonizamos com essas pessoas em nossa Prece Coletiva.",
     icon: "Flame",
     href: "/oracoes",
     ctaLabel: "Enviar pedido",

@@ -44,13 +44,12 @@ export default function Oracoes() {
           Prece Coletiva
         </Reveal>
         <Reveal delay={80} as="h1" className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight text-navy-950 md:text-5xl">
-          Deixe um nome para orarmos com você
+          Deixe o nome da pessoa que gostaria de prece
         </Reveal>
         <Reveal delay={140} as="p" className="mt-5 text-base leading-relaxed text-navy-950/70 md:text-lg">
-          Durante nossos trabalhos espirituais, sintonizamos com as pessoas que precisam de
-          oração e tratamento. Deixe o nome completo de quem você quer incluir — vale para você
-          mesmo ou para alguém querido. Essas informações são usadas só internamente, para o
-          trabalho da Casa.
+          Toda semana, reunimo-nos em prece por quem precisa de conforto e tratamento. Deixe o
+          nome completo de quem você quer incluir — vale para você mesmo ou para alguém querido.
+          Essas informações são usadas só internamente, para o trabalho da Casa.
         </Reveal>
 
         {status === "done" ? (
@@ -59,7 +58,7 @@ export default function Oracoes() {
             <div>
               <p className="font-display text-xl font-semibold text-navy-950">Pedido recebido.</p>
               <p className="mt-2 text-sm leading-relaxed text-navy-950/70">
-                Vamos incluir {nomeCompleto.trim().split(" ")[0]} em nossos próximos trabalhos.
+                Vamos incluir {nomeCompleto.trim().split(" ")[0]} em nossas preces.
               </p>
             </div>
             <button
@@ -117,8 +116,8 @@ export default function Oracoes() {
 
             <p className="flex items-start gap-2 text-xs leading-relaxed text-navy-950/50">
               <ShieldCheck size={15} className="mt-0.5 flex-shrink-0" />
-              Os dados enviados aqui são usados apenas internamente pela Casa, para os trabalhos
-              espirituais, e não são compartilhados com terceiros — em conformidade com a LGPD
+              Os dados enviados aqui são usados apenas internamente pela Casa, para a Prece
+              Coletiva, e não são compartilhados com terceiros — em conformidade com a LGPD
               (Lei Geral de Proteção de Dados).
             </p>
           </Reveal>

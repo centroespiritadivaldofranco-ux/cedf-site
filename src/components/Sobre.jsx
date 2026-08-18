@@ -37,6 +37,10 @@ export default function Sobre() {
               Não representamos nem somos representados por Divaldo Franco — o nome é uma
               homenagem à sua vida de dedicação à caridade e ao estudo.
             </Reveal>
+            <Reveal delay={190} as="p" className="mt-4 text-base leading-relaxed text-navy-950/70 md:text-lg">
+              Seguimos o Espiritismo segundo a codificação de Allan Kardec, tendo o Evangelho
+              como guia para o nosso agir.
+            </Reveal>
             <Reveal delay={220} as="p" className="mt-4 text-base leading-relaxed text-navy-950/70 md:text-lg">
               Se você tem vontade de conhecer uma casa espírita, venha nos visitar. É um lugar
               simples, acolhedor, aberto a todos que desejam amor, fraternidade e paz.
