@@ -90,10 +90,6 @@ export const angelis = {
   instagram: "https://www.instagram.com/angelisrefeitorio/",
   volunteerForm:
     "https://docs.google.com/forms/d/e/1FAIpQLSdGjfWZNk9ql7YWLDcwp1LcKNvp0bVTnP-CHAyj67zJTDaSHQ/viewform?usp=send_form",
-  posts: [
-    "https://www.instagram.com/angelisrefeitorio/p/DSKwS0ckePS/",
-    "https://www.instagram.com/angelisrefeitorio/p/DKZ3uqXxVnd/",
-  ],
 };
 
 export const thursdaySchedule = [

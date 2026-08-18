@@ -1,6 +1,5 @@
 import { ArrowUpRight, ChefHat, AtSign, CalendarCheck } from "lucide-react";
 import Reveal from "./Reveal";
-import InstagramEmbed from "./InstagramEmbed";
 import { angelis } from "../data/content";
 
 export default function Angelis() {
@@ -54,19 +53,6 @@ export default function Angelis() {
             </Reveal>
           </div>
         </div>
-
-        {angelis.posts?.length > 0 && (
-          <Reveal delay={120} className="mt-16 border-t border-navy-950/15 pt-16">
-            <p className="text-center text-xs font-bold uppercase tracking-wide text-navy-950/70">
-              Direto do @angelisrefeitorio
-            </p>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              {angelis.posts.map((url) => (
-                <InstagramEmbed key={url} url={url} />
-              ))}
-            </div>
-          </Reveal>
-        )}
       </div>
     </section>
   );
