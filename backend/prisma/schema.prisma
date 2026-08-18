@@ -1,0 +1,19 @@
+// Schema do banco de dados — backend do site institucional (cedf-site)
+// Fase 1: pedidos de oração/tratamento espiritual, enviados pelo site público.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PedidoOracao {
+  id           String   @id @default(uuid())
+  nomeCompleto String
+  mensagem     String?
+  atendido     Boolean  @default(false)
+  criadoEm     DateTime @default(now())
+}
