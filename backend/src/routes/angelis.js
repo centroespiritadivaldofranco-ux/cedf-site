@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getRecentPosts, saveInitialToken } from "../services/instagram.js";
+import { getRecentPosts, saveInitialToken, getAuthorizeUrl, completeAuthorization } from "../services/instagram.js";
 
 export const angelisRouter = Router();
 
@@ -33,5 +33,39 @@ angelisRouter.post("/token", requireAdmin, async (req, res) => {
     res.json({ ok: true, expiraEm });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+// Abra essa URL no navegador (protegida pelo ADMIN_TOKEN via query, já que é
+// um clique manual e não uma chamada de API) pra logar no Instagram e
+// autorizar. Depois de autorizar, o Instagram redireciona pro /callback
+// abaixo, que já guarda o token sozinho — sem precisar copiar/colar nada.
+angelisRouter.get("/connect", (req, res) => {
+  if (req.query.admin_token !== process.env.ADMIN_TOKEN) {
+    return res.status(401).send("Não autorizado.");
+  }
+  const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
+  res.redirect(getAuthorizeUrl(redirectUri));
+});
+
+angelisRouter.get("/callback", async (req, res) => {
+  if (req.query.error) {
+    return res.status(400).send(`Autorização cancelada ou negada: ${req.query.error_description || req.query.error}`);
+  }
+  if (!req.query.code) {
+    return res.status(400).send("Nenhum código recebido do Instagram.");
+  }
+  try {
+    const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
+    const { expiraEm } = await completeAuthorization(req.query.code, redirectUri);
+    res.send(
+      `<html><body style="font-family: sans-serif; padding: 40px; text-align: center;">
+        <h1>Instagram conectado! ✅</h1>
+        <p>O token foi salvo e vai se renovar sozinho até ${new Date(expiraEm).toLocaleDateString("pt-BR")}.</p>
+        <p>Pode fechar essa aba e conferir a galeria no site.</p>
+      </body></html>`
+    );
+  } catch (err) {
+    res.status(500).send(`Erro ao conectar: ${err.message}`);
   }
 });

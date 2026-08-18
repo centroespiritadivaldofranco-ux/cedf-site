@@ -11,6 +11,44 @@ async function getStoredToken() {
   return prisma.instagramToken.findUnique({ where: { id: TOKEN_ID } });
 }
 
+export function getAuthorizeUrl(redirectUri) {
+  const url = new URL("https://www.instagram.com/oauth/authorize");
+  url.searchParams.set("client_id", process.env.INSTAGRAM_APP_ID);
+  url.searchParams.set("redirect_uri", redirectUri);
+  url.searchParams.set("response_type", "code");
+  url.searchParams.set("scope", "instagram_business_basic");
+  return url.toString();
+}
+
+// Troca o "code" recebido no callback do OAuth por um token de curta duração.
+async function exchangeCodeForToken(code, redirectUri) {
+  const body = new URLSearchParams({
+    client_id: process.env.INSTAGRAM_APP_ID,
+    client_secret: process.env.INSTAGRAM_APP_SECRET,
+    grant_type: "authorization_code",
+    redirect_uri: redirectUri,
+    code,
+  });
+
+  const res = await fetch("https://api.instagram.com/oauth/access_token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error_message || "Não foi possível autorizar com o Instagram.");
+  }
+  return data.access_token;
+}
+
+// Fluxo completo do callback: troca o code por um token curto, depois troca
+// esse token curto por um de longa duração (60 dias) e guarda no banco.
+export async function completeAuthorization(code, redirectUri) {
+  const shortLivedToken = await exchangeCodeForToken(code, redirectUri);
+  return saveInitialToken(shortLivedToken);
+}
+
 // Recebe um token novo (curto ou longo prazo) vindo do Graph API Explorer,
 // troca por um token de longa duração (60 dias) e guarda no banco.
 export async function saveInitialToken(rawToken) {

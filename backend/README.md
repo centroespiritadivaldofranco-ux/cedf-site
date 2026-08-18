@@ -63,36 +63,43 @@ segundos pra acordar na primeira requisição seguinte — normal, não é erro.
 
 ## Conectando o Instagram do Ângelis
 
-Pré-requisito: o @angelisrefeitorio precisa ser conta profissional (já é) **e**
-estar vinculado a uma Página do Facebook (Instagram → Configurações → Central
-de Contas).
+Pré-requisito: o @angelisrefeitorio precisa ser conta profissional (já é).
+**Não precisa de Página do Facebook** — esse é o método novo da Meta
+("Instagram API with Instagram Login"), que loga direto com a conta do
+Instagram. Se você tentou pelo Graph API Explorer com permissões tipo
+`pages_show_list` e caiu em erro de "Invalid Scopes", é porque aquele é o
+método antigo — pode ignorar e seguir por aqui.
 
 1. Acesse [developers.facebook.com](https://developers.facebook.com/) → **My Apps** → **Create App**
    - Tipo de app: **Business**
-   - Nome: qualquer um (ex: "CEDF Site")
-2. No painel do app, adicione o produto **Instagram Graph API** (Add Product → Instagram)
-3. Em **App Settings → Basic**, copie o **App Secret** — essa é a variável
-   `INSTAGRAM_APP_SECRET` que você vai colar no Render (serviço do backend)
-4. Vá em **Tools → Graph API Explorer**:
-   - Selecione o app criado
-   - Em "User or Page", escolha a Página do Facebook vinculada ao Ângelis
-   - Em permissões, adicione `instagram_basic` e `pages_show_list`
-   - Clique **Generate Access Token** e faça login/autorize quando pedir
-   - Copie o token gerado (é de curta duração, ~1h — tudo bem, o backend troca
-     por um de 60 dias automaticamente no próximo passo)
-5. Com o backend já publicado no Render, envie esse token pra ele guardar:
+2. No painel do app, adicione o produto **Instagram** → escolha
+   **"API setup with Instagram login"** (não "with Facebook Login")
+3. Nessa página do produto, em **"3. Set up Instagram business login" → Business login settings**:
+   - Em **"OAuth redirect URIs"**, cadastre exatamente:
+     `https://SEU-BACKEND.onrender.com/api/angelis/callback`
+     (troque pelo endereço real do seu backend no Render)
+4. Em **App Settings → Basic**, copie o **App ID** e o **App Secret**
+5. No Render, no serviço do backend, adicione essas variáveis de ambiente:
+   - `INSTAGRAM_APP_ID` — o App ID do passo 4
+   - `INSTAGRAM_APP_SECRET` — o App Secret do passo 4
+   - `INSTAGRAM_REDIRECT_URI` — a mesma URL cadastrada no passo 3
+6. Com o backend no ar, abra no navegador (troque os dois valores):
 
-   ```bash
-   curl -X POST https://SEU-BACKEND.onrender.com/api/angelis/token \
-     -H "Authorization: Bearer SEU_ADMIN_TOKEN" \
-     -H "Content-Type: application/json" \
-     -d '{"token":"COLE_O_TOKEN_AQUI"}'
+   ```
+   https://SEU-BACKEND.onrender.com/api/angelis/connect?admin_token=SEU_ADMIN_TOKEN
    ```
 
-   Se dar certo, responde `{"ok":true,"expiraEm":"..."}`. A partir daí o
-   backend renova sozinho a cada vez que o token estiver perto de vencer — não
-   precisa repetir esse passo, a não ser que o token realmente expire (só
-   aconteceria se o site ficasse muito tempo sem receber nenhuma visita, já
-   que a renovação acontece a cada busca de posts).
+   Isso leva direto pra tela de login do Instagram. Loga como
+   @angelisrefeitorio (ou quem tiver acesso) e autoriza. O Instagram
+   redireciona de volta sozinho, e a página final confirma "Instagram
+   conectado!" — nada pra copiar ou colar.
 
-6. Teste: `GET /api/angelis/posts` deve retornar os posts recentes em JSON.
+7. A partir daí, o backend renova o token sozinho antes de vencer (a cada 60
+   dias). Só repete o passo 6 se o token realmente expirar (só aconteceria se
+   o site ficasse muito tempo sem nenhuma visita).
+
+8. Teste: `GET /api/angelis/posts` deve retornar os posts recentes em JSON.
+
+Se preferir gerar o token manualmente (Graph API Explorer, método antigo, com
+Página do Facebook vinculada), o endpoint `POST /api/angelis/token` continua
+disponível como alternativa — veja o código em `src/routes/angelis.js`.
