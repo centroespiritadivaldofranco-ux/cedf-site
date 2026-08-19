@@ -37,7 +37,8 @@ async function exchangeCodeForToken(code, redirectUri) {
   });
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(data.error_message || "Não foi possível autorizar com o Instagram.");
+    const debugInfo = `redirect_uri usado: ${redirectUri} | client_id usado: ${process.env.INSTAGRAM_APP_ID} | resposta do Instagram: ${JSON.stringify(data)}`;
+    throw new Error(`${data.error_message || "Não foi possível autorizar com o Instagram."} — [DEBUG] ${debugInfo}`);
   }
   return data.access_token;
 }
