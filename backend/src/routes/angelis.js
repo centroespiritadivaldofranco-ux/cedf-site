@@ -57,7 +57,10 @@ angelisRouter.get("/callback", async (req, res) => {
   }
   try {
     const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
-    const { expiraEm } = await completeAuthorization(req.query.code, redirectUri);
+    // O Instagram costuma grudar "#_" no final do código — não faz parte do
+    // valor de verdade e precisa ser removido antes de trocar pelo token.
+    const code = req.query.code.replace(/#_$/, "");
+    const { expiraEm } = await completeAuthorization(code, redirectUri);
     res.send(
       `<html><body style="font-family: sans-serif; padding: 40px; text-align: center;">
         <h1>Instagram conectado! ✅</h1>
