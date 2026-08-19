@@ -49,17 +49,21 @@ angelisRouter.get("/connect", (req, res) => {
 });
 
 angelisRouter.get("/callback", async (req, res) => {
+  const rawUrl = req.originalUrl;
+  console.log("[angelis/callback] URL bruta recebida:", rawUrl);
+  console.log("[angelis/callback] query parseada:", JSON.stringify(req.query));
+
   if (req.query.error) {
     return res.status(400).send(`Autorização cancelada ou negada: ${req.query.error_description || req.query.error}`);
   }
   if (!req.query.code) {
-    return res.status(400).send("Nenhum código recebido do Instagram.");
+    return res.status(400).send(`Nenhum código recebido do Instagram. [DEBUG] URL bruta: ${rawUrl}`);
   }
+  const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
+  // O Instagram costuma grudar "#_" no final do código — não faz parte do
+  // valor de verdade e precisa ser removido antes de trocar pelo token.
+  const code = String(req.query.code).replace(/#_$/, "");
   try {
-    const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
-    // O Instagram costuma grudar "#_" no final do código — não faz parte do
-    // valor de verdade e precisa ser removido antes de trocar pelo token.
-    const code = req.query.code.replace(/#_$/, "");
     const { expiraEm } = await completeAuthorization(code, redirectUri);
     res.send(
       `<html><body style="font-family: sans-serif; padding: 40px; text-align: center;">
@@ -69,6 +73,7 @@ angelisRouter.get("/callback", async (req, res) => {
       </body></html>`
     );
   } catch (err) {
-    res.status(500).send(`Erro ao conectar: ${err.message}`);
+    const debugInfo = `URL bruta recebida: ${rawUrl} | code (após limpar #_): ${code} | code length: ${code.length}`;
+    res.status(500).send(`Erro ao conectar: ${err.message} — [DEBUG2] ${debugInfo}`);
   }
 });
