@@ -63,17 +63,9 @@ angelisRouter.get("/callback", async (req, res) => {
   // O Instagram costuma grudar "#_" no final do código — não faz parte do
   // valor de verdade e precisa ser removido antes de trocar pelo token.
   const code = String(req.query.code).replace(/#_$/, "");
-  try {
-    const { expiraEm } = await completeAuthorization(code, redirectUri);
-    res.send(
-      `<html><body style="font-family: sans-serif; padding: 40px; text-align: center;">
-        <h1>Instagram conectado! ✅</h1>
-        <p>O token foi salvo e vai se renovar sozinho até ${new Date(expiraEm).toLocaleDateString("pt-BR")}.</p>
-        <p>Pode fechar essa aba e conferir a galeria no site.</p>
-      </body></html>`
-    );
-  } catch (err) {
-    const debugInfo = `URL bruta recebida: ${rawUrl} | code (após limpar #_): ${code} | code length: ${code.length}`;
-    res.status(500).send(`Erro ao conectar: ${err.message} — [DEBUG2] ${debugInfo}`);
-  }
+
+  // MODO DEBUG TEMPORÁRIO: mostra o código sem gastar ele numa troca, pra
+  // testar manualmente por fora e isolar a causa real do erro. Reverter pra
+  // completeAuthorization(code, redirectUri) depois que resolvermos.
+  res.send(`<pre>code=${code}\nredirect_uri=${redirectUri}\nclient_id=${process.env.INSTAGRAM_APP_ID}</pre>`);
 });
