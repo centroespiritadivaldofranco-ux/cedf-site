@@ -21,18 +21,20 @@ export function getAuthorizeUrl(redirectUri) {
 }
 
 // Troca o "code" recebido no callback do OAuth por um token de curta duração.
+// A documentação oficial da Meta manda esse POST como multipart/form-data
+// (o exemplo deles usa `curl -F`, não `-d`) — por isso FormData aqui, não
+// URLSearchParams. Não define Content-Type manualmente: o fetch monta o
+// boundary do multipart sozinho quando o body é um FormData.
 async function exchangeCodeForToken(code, redirectUri) {
-  const body = new URLSearchParams({
-    client_id: process.env.INSTAGRAM_APP_ID,
-    client_secret: process.env.INSTAGRAM_APP_SECRET,
-    grant_type: "authorization_code",
-    redirect_uri: redirectUri,
-    code,
-  });
+  const body = new FormData();
+  body.set("client_id", process.env.INSTAGRAM_APP_ID);
+  body.set("client_secret", process.env.INSTAGRAM_APP_SECRET);
+  body.set("grant_type", "authorization_code");
+  body.set("redirect_uri", redirectUri);
+  body.set("code", code);
 
   const res = await fetch("https://api.instagram.com/oauth/access_token", {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
   });
   const data = await res.json();
