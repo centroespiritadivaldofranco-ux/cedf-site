@@ -50,6 +50,15 @@ export const activities = [
     icon: "BookOpen",
   },
   {
+    title: "Projeto Ângelis",
+    schedule: "Todo sábado",
+    description:
+      "Nosso refeitório social infantil: alimentamos crianças e adolescentes de comunidades carentes de João Pessoa. Já são mais de 20 mil refeições entregues.",
+    icon: "ChefHat",
+    href: "#angelis",
+    ctaLabel: "Conhecer o Ângelis",
+  },
+  {
     title: "Psicografia",
     schedule: "Cartas e mensagens",
     description:

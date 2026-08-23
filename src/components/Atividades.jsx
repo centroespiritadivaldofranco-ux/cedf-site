@@ -1,9 +1,9 @@
-import { Mic2, Sparkles, Home, BookOpen, PenLine, HeartHandshake, HeartPulse, Flame, Hand, Clock, ArrowRight, Play } from "lucide-react";
+import { Mic2, Sparkles, Home, BookOpen, PenLine, HeartHandshake, HeartPulse, Flame, Hand, ChefHat, Clock, ArrowRight, Play } from "lucide-react";
 import Reveal from "./Reveal";
 import InstagramEmbed from "./InstagramEmbed";
 import { activities } from "../data/content";
 
-const icons = { Mic2, Sparkles, Home, BookOpen, PenLine, HeartHandshake, HeartPulse, Flame, Hand };
+const icons = { Mic2, Sparkles, Home, BookOpen, PenLine, HeartHandshake, HeartPulse, Flame, Hand, ChefHat };
 const evangelhoReel = activities.find((a) => a.reelUrl)?.reelUrl;
 
 export default function Atividades() {
