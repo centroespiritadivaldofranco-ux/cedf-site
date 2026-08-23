@@ -1,9 +1,19 @@
-import { ArrowUpRight, ChefHat, AtSign, CalendarCheck } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, ChefHat, AtSign, CalendarCheck, Copy, Check, Heart, Repeat } from "lucide-react";
 import Reveal from "./Reveal";
 import AngelisFeed from "./AngelisFeed";
 import { angelis } from "../data/content";
 
 export default function Angelis() {
+  const [copied, setCopied] = useState(false);
+
+  function copyPixKey() {
+    navigator.clipboard.writeText(angelis.pixKey).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
   return (
     <section id="angelis" className="bg-blue-500 py-24 md:py-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
@@ -54,6 +64,53 @@ export default function Angelis() {
             </Reveal>
           </div>
         </div>
+
+        <Reveal delay={120} className="mt-16 grid gap-4 border-t border-navy-950/15 pt-16 sm:grid-cols-2">
+          <div className="bg-paper-0 p-6">
+            <Heart className="text-blue-500" size={22} />
+            <p className="mt-3 text-xs font-bold uppercase tracking-wide text-navy-950/60">Doação pontual</p>
+            <h3 className="mt-1 font-display text-lg font-semibold text-navy-950">Chave Pix</h3>
+            <p className="mt-2 text-sm leading-relaxed text-navy-950/70">
+              Qualquer valor ajuda a manter o refeitório funcionando todo sábado.
+            </p>
+            <button
+              type="button"
+              onClick={copyPixKey}
+              className="mt-4 flex w-full items-center justify-between gap-2 border border-navy-950/20 bg-blue-100 px-4 py-3 text-left transition hover:border-navy-950/40"
+            >
+              <code className="truncate text-sm font-medium text-navy-950">{angelis.pixKey}</code>
+              <span className="flex flex-shrink-0 items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-navy-950/70">
+                {copied ? (
+                  <>
+                    <Check size={14} /> Copiado
+                  </>
+                ) : (
+                  <>
+                    <Copy size={14} /> Copiar
+                  </>
+                )}
+              </span>
+            </button>
+          </div>
+
+          <div className="bg-paper-0 p-6">
+            <Repeat className="text-blue-500" size={22} />
+            <p className="mt-3 text-xs font-bold uppercase tracking-wide text-navy-950/60">Doação mensal recorrente</p>
+            <h3 className="mt-1 font-display text-lg font-semibold text-navy-950">Clubinho Ângelis</h3>
+            <p className="mt-2 text-sm leading-relaxed text-navy-950/70">
+              Escolhe um valor e ele é debitado automaticamente todo mês — sem precisar lembrar.
+            </p>
+            <a
+              href={angelis.clubinhoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex items-center gap-2 bg-navy-950 px-6 py-3 text-sm font-bold uppercase tracking-wide text-paper-0 transition hover:bg-navy-800"
+            >
+              Quero fazer parte
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </Reveal>
 
         <AngelisFeed />
       </div>

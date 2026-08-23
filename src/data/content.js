@@ -29,7 +29,7 @@ export const activities = [
   },
   {
     title: "Reunião mediúnica",
-    schedule: "Privativa · consulte a agenda",
+    schedule: "Privativa",
     description:
       "Espaço de estudo e desenvolvimento da mediunidade com responsabilidade, ética e orientação constante. Restrita a membros com estudo prévio, que assumem o compromisso semanal com as palestras e integram o trabalho social da Casa — parte do tratamento espiritual de quem participa.",
     icon: "Sparkles",
@@ -99,6 +99,8 @@ export const angelis = {
   instagram: "https://www.instagram.com/angelisrefeitorio/",
   volunteerForm:
     "https://docs.google.com/forms/d/e/1FAIpQLSdGjfWZNk9ql7YWLDcwp1LcKNvp0bVTnP-CHAyj67zJTDaSHQ/viewform?usp=send_form",
+  pixKey: "oprojetoangelis@gmail.com",
+  clubinhoUrl: "https://linktr.ee/projetoangelis",
 };
 
 export const thursdaySchedule = [
