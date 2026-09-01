@@ -1,7 +1,9 @@
 # Backend do site — cedf-site
 
-API mínima para o site institucional. Por enquanto só cuida dos **pedidos de oração**
-(`/api/oracoes`), enviados pelo formulário público em `/oracoes`.
+API mínima para o site institucional. Cuida dos **pedidos de oração**
+(`/api/oracoes`), enviados pelo formulário público em `/oracoes`, e da
+**leitura em voz alta das cartas psicografadas** (`/api/tts`), usada na
+página `/psicografias`.
 
 ## Como rodar na sua máquina
 
@@ -23,6 +25,46 @@ npm run dev                              # roda em http://localhost:3002
 | POST | `/api/oracoes` | pública (com limite de 5 pedidos/10min por IP) | Recebe `{ nomeCompleto, mensagem? }` e salva o pedido |
 | GET | `/api/oracoes` | `Authorization: Bearer <ADMIN_TOKEN>` | Lista todos os pedidos, mais recentes primeiro |
 | PATCH | `/api/oracoes/:id` | `Authorization: Bearer <ADMIN_TOKEN>` | Marca `{ atendido: true }` depois que o nome for incluído nos trabalhos |
+| POST | `/api/tts` | pública (com limite de 60 pedidos/10min por IP) | Recebe `{ id, text, voiceName? }` e devolve o áudio (MP3) da leitura em voz alta |
+
+## Configurando a leitura em voz alta (Google Cloud Text-to-Speech)
+
+A página `/psicografias` tem um botão "Ouvir" em cada carta. Ele chama
+`POST /api/tts`, que gera o áudio usando as vozes **Neural2** do Google Cloud
+(bem mais naturais que a voz robótica padrão do navegador). Sem a chave
+configurada, o site continua funcionando normalmente — o botão cai
+automaticamente para a voz do navegador como reserva.
+
+A camada gratuita do Google Cloud TTS cobre **1 milhão de caracteres/mês**
+nas vozes Neural2 (permanente, não é só teste de 12 meses) — na prática,
+suficiente para manter essa funcionalidade sem custo.
+
+1. Acesse o [Google Cloud Console](https://console.cloud.google.com/) e crie
+   um projeto novo (ou use um existente). É pedido um cartão de crédito no
+   cadastro da conta, mas você não é cobrado enquanto ficar dentro da cota
+   gratuita mensal.
+2. No menu, vá em **APIs e serviços → Biblioteca**, busque por
+   **"Cloud Text-to-Speech API"** e clique em **Ativar**.
+3. Vá em **APIs e serviços → Credenciais → Criar credenciais → Chave de API**.
+4. (Recomendado) Clique na chave criada e em **Restringir chave**, marcando
+   apenas a **Cloud Text-to-Speech API** — assim, mesmo que a chave vaze, ela
+   não serve para mais nada.
+5. Copie a chave gerada e cole em `GOOGLE_TTS_API_KEY` no `.env` (local) e nas
+   **Environment Variables** do serviço backend no Render (produção).
+6. Reinicie o backend (`npm run dev` local, ou "Manual Deploy" no Render). O
+   botão "Ouvir" já passa a usar a voz Neural2 na próxima leitura.
+
+O áudio de cada carta é gerado uma vez e guardado em cache na memória do
+servidor (`backend/src/services/googleTts.service.js`) enquanto o processo
+estiver no ar, para não gastar cota gerando a mesma carta repetidamente.
+Como o backend roda no plano Free do Render, esse cache reseta sempre que o
+serviço "dorme" e acorda de novo — o custo disso é só uma geração extra na
+primeira audição depois de um período ocioso, não afeta a cota mensal de
+forma relevante.
+
+Por padrão a voz usada é `pt-BR-Neural2-A` (feminina). As outras vozes
+disponíveis são `pt-BR-Neural2-B` (masculina) e `pt-BR-Neural2-C` (feminina)
+— para trocar, passe `voiceName` no corpo da requisição a partir do frontend.
 
 Para ver os pedidos sem construir uma tela de admin ainda, dá pra chamar direto:
 
@@ -53,6 +95,7 @@ a opção Free ainda aparece certinho.
    - `ADMIN_TOKEN` — qualquer string longa e aleatória
    - `FRONTEND_ORIGIN` — `https://cedf.com.br,https://www.cedf.com.br`
    - `PORT` — `3002`
+   - `GOOGLE_TTS_API_KEY` — opcional, veja "Configurando a leitura em voz alta" abaixo
 5. Crie o serviço. Quando terminar de subir, copie a URL pública dele (algo como
    `https://cedf-site-backend.onrender.com`) e atualize a variável `VITE_API_URL`
    do serviço do site (o que veio do `render.yaml`) com essa URL — depois faça um

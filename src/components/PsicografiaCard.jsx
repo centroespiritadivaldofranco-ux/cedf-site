@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Volume2, Square } from "lucide-react";
+import { ChevronDown, Volume2, Square, Loader2 } from "lucide-react";
 import { CATEGORIES } from "../data/psicografias";
 
 function formatDate(iso) {
@@ -8,9 +8,10 @@ function formatDate(iso) {
   return `${day}/${month}/${year}`;
 }
 
-export default function PsicografiaCard({ letter, speakingId, onSpeak, onStop, supported }) {
+export default function PsicografiaCard({ letter, speakingId, loadingId, onSpeak, onStop, supported }) {
   const [open, setOpen] = useState(false);
   const isSpeaking = speakingId === letter.id;
+  const isLoading = loadingId === letter.id;
 
   return (
     <div className="border border-navy-950/15 bg-paper-0">
@@ -39,15 +40,26 @@ export default function PsicografiaCard({ letter, speakingId, onSpeak, onStop, s
           {supported && (
             <button
               type="button"
-              onClick={() => (isSpeaking ? onStop() : onSpeak(letter.id, `Carta para ${letter.name}. ${letter.content}`))}
-              className={`inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wide transition ${
+              disabled={isLoading}
+              onClick={() =>
+                isSpeaking
+                  ? onStop()
+                  : onSpeak(letter.id, `Carta para ${letter.name}. ${letter.content}`)
+              }
+              className={`inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wide transition disabled:opacity-60 ${
                 isSpeaking
                   ? "bg-blue-500 text-paper-0"
                   : "bg-navy-950 text-paper-0 hover:bg-blue-500"
               }`}
             >
-              {isSpeaking ? <Square size={13} /> : <Volume2 size={14} />}
-              {isSpeaking ? "Parar" : "Ouvir"}
+              {isLoading ? (
+                <Loader2 size={13} className="animate-spin" />
+              ) : isSpeaking ? (
+                <Square size={13} />
+              ) : (
+                <Volume2 size={14} />
+              )}
+              {isLoading ? "Gerando..." : isSpeaking ? "Parar" : "Ouvir"}
             </button>
           )}
         </div>

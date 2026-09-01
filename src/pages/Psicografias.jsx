@@ -14,7 +14,7 @@ const filters = [
 export default function Psicografias() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("todas");
-  const { speakingId, speak, stop, supported } = useSpeech();
+  const { speakingId, loadingId, speak, stop, supported } = useSpeech();
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -81,6 +81,7 @@ export default function Psicografias() {
               <PsicografiaCard
                 letter={letter}
                 speakingId={speakingId}
+                loadingId={loadingId}
                 onSpeak={speak}
                 onStop={stop}
                 supported={supported}
