@@ -10,8 +10,8 @@ export default function Home() {
     <main>
       <Hero />
       <Sobre />
-      <Atividades />
       <Angelis />
+      <Atividades />
       <FrasesMarquee />
       <Localizacao />
     </main>

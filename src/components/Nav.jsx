@@ -4,8 +4,8 @@ import Wordmark from "./Wordmark";
 
 const links = [
   { href: "/#sobre", label: "Sobre" },
-  { href: "/#atividades", label: "Atividades" },
   { href: "/#angelis", label: "Ângelis" },
+  { href: "/#atividades", label: "Atividades" },
   { href: "/psicografias", label: "Psicografias" },
   { href: "/oracoes", label: "Prece" },
   { href: "/#contato", label: "Localização" },
