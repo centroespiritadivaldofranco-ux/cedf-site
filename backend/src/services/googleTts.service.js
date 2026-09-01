@@ -1,7 +1,7 @@
 const GOOGLE_TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";
 const MAX_CHUNK_CHARS = 4500;
 
-export const DEFAULT_VOICE = "pt-BR-Neural2-A";
+export const DEFAULT_VOICE = "pt-BR-Wavenet-B";
 export const AVAILABLE_VOICES = new Set([
   "pt-BR-Neural2-A", // feminina
   "pt-BR-Neural2-B", // masculina
