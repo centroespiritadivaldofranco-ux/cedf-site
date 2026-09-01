@@ -11,12 +11,21 @@ async function getStoredToken() {
   return prisma.instagramToken.findUnique({ where: { id: TOKEN_ID } });
 }
 
+// Mesma URL que a própria Meta gera no painel do app ("URL incorporado" em
+// "Configurar o login da empresa no Instagram") — força reautenticação e
+// pede o conjunto completo de permissões que o app declarou como
+// obrigatórias. Só usamos instagram_business_basic de fato, mas pedir menos
+// que o app declarou como obrigatório pode ter sido a causa da divergência.
 export function getAuthorizeUrl(redirectUri) {
   const url = new URL("https://www.instagram.com/oauth/authorize");
+  url.searchParams.set("force_reauth", "true");
   url.searchParams.set("client_id", process.env.INSTAGRAM_APP_ID);
   url.searchParams.set("redirect_uri", redirectUri);
   url.searchParams.set("response_type", "code");
-  url.searchParams.set("scope", "instagram_business_basic");
+  url.searchParams.set(
+    "scope",
+    "instagram_business_basic,instagram_business_manage_messages,instagram_business_manage_comments,instagram_business_content_publish,instagram_business_manage_insights"
+  );
   return url.toString();
 }
 
