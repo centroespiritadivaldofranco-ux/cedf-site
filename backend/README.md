@@ -1,9 +1,10 @@
 # Backend do site — cedf-site
 
 API mínima para o site institucional. Cuida dos **pedidos de oração**
-(`/api/oracoes`), enviados pelo formulário público em `/oracoes`, e da
-**leitura em voz alta das cartas psicografadas** (`/api/tts`), usada na
-página `/psicografias`.
+(`/api/oracoes`), enviados pelo formulário público em `/oracoes`, das
+**cartas psicografadas** exibidas em `/psicografias` (`/api/cartas-psicografadas`,
+buscadas do sistema da tesouraria) e da **leitura em voz alta** dessas cartas
+(`/api/tts`).
 
 ## Como rodar na sua máquina
 
@@ -26,6 +27,34 @@ npm run dev                              # roda em http://localhost:3002
 | GET | `/api/oracoes` | `Authorization: Bearer <ADMIN_TOKEN>` | Lista todos os pedidos, mais recentes primeiro |
 | PATCH | `/api/oracoes/:id` | `Authorization: Bearer <ADMIN_TOKEN>` | Marca `{ atendido: true }` depois que o nome for incluído nos trabalhos |
 | POST | `/api/tts` | pública (com limite de 60 pedidos/10min por IP) | Recebe `{ id, text, voiceName? }` e devolve o áudio (MP3) da leitura em voz alta |
+| GET | `/api/cartas-psicografadas` | pública | Lista as cartas psicografadas cadastradas no sistema da tesouraria, no formato usado por `/psicografias` |
+
+## Conectando as cartas psicografadas ao sistema da tesouraria
+
+A página `/psicografias` não guarda mais as cartas no próprio código — ela
+busca de `GET /api/cartas-psicografadas`, que por sua vez busca do backend do
+`cedf-tesouraria` (`GET /api/cartas-psicografadas/publicas`, endpoint público
+já existente lá). Ou seja: toda carta cadastrada por quem cuida da tesouraria
+aparece automaticamente aqui, sem precisar editar código nem fazer deploy.
+
+Configuração necessária:
+
+1. Defina `TESOURARIA_API_URL` nas variáveis de ambiente deste backend, com a
+   URL pública do backend do `cedf-tesouraria` (ex:
+   `https://cedf-tesouraria-backend.onrender.com`, sem barra no final).
+2. Não é preciso mexer em nada do lado do `cedf-tesouraria` — essa busca
+   acontece de servidor para servidor, então as regras de CORS de lá não
+   entram nessa conversa.
+
+O resultado fica em cache por 5 minutos neste backend, para não sobrecarregar
+o sistema da tesouraria a cada visita ao site — uma carta nova cadastrada lá
+pode levar até 5 minutos para aparecer aqui.
+
+Mapeamento dos campos: uma carta com **destinatário** preenchido aparece na
+categoria "Endereçada a alguém querido" (o nome mostrado é o do destinatário);
+sem destinatário, aparece como "Mensagem de mentor espiritual da Casa" (o nome
+mostrado é o do autor espiritual, ou o título da carta se nenhum dos dois
+estiver preenchido).
 
 ## Configurando a leitura em voz alta (Google Cloud Text-to-Speech)
 

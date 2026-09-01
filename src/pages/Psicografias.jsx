@@ -3,7 +3,8 @@ import { Search } from "lucide-react";
 import Reveal from "../components/Reveal";
 import PsicografiaCard from "../components/PsicografiaCard";
 import { useSpeech } from "../hooks/useSpeech";
-import { psicografias, CATEGORIES } from "../data/psicografias";
+import { useCartasPsicografadas } from "../hooks/useCartasPsicografadas";
+import { CATEGORIES } from "../data/psicografias";
 
 const filters = [
   { id: "todas", label: "Todas" },
@@ -15,15 +16,16 @@ export default function Psicografias() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("todas");
   const { speakingId, loadingId, speak, stop, supported } = useSpeech();
+  const { cartas, status } = useCartasPsicografadas();
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return psicografias.filter((letter) => {
+    return cartas.filter((letter) => {
       const matchesFilter = filter === "todas" || letter.category === filter;
       const matchesQuery = !q || letter.name.toLowerCase().includes(q);
       return matchesFilter && matchesQuery;
     });
-  }, [query, filter]);
+  }, [cartas, query, filter]);
 
   return (
     <main className="pt-32 pb-24 md:pt-44 md:pb-32">
@@ -70,7 +72,17 @@ export default function Psicografias() {
         </Reveal>
 
         <div className="mt-10 flex flex-col gap-4">
-          {results.length === 0 && (
+          {status === "loading" && (
+            <p className="border border-dashed border-navy-950/25 p-8 text-center text-sm text-navy-950/60">
+              Carregando as cartas...
+            </p>
+          )}
+          {status === "error" && (
+            <p className="border border-dashed border-navy-950/25 p-8 text-center text-sm text-navy-950/60">
+              Não foi possível carregar as cartas agora. Tente novamente em alguns minutos.
+            </p>
+          )}
+          {status === "ready" && results.length === 0 && (
             <p className="border border-dashed border-navy-950/25 p-8 text-center text-sm text-navy-950/60">
               Nenhuma carta encontrada com esse nome. Tente buscar de outro jeito, ou entre em
               contato conosco pelo Instagram.
