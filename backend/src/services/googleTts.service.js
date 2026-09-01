@@ -6,6 +6,9 @@ export const AVAILABLE_VOICES = new Set([
   "pt-BR-Neural2-A", // feminina
   "pt-BR-Neural2-B", // masculina
   "pt-BR-Neural2-C", // feminina
+  "pt-BR-Wavenet-A", // feminina
+  "pt-BR-Wavenet-B", // masculina
+  "pt-BR-Wavenet-C", // feminina
 ]);
 
 const audioCache = new Map();
