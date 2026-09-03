@@ -1,40 +1,45 @@
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || "UCZ6iA0tn4mT3OegGDnfn2aw";
-// A playlist de uploads de um canal é sempre o próprio ID do canal trocando o
-// prefixo "UC" por "UU" — evita uma chamada extra só pra descobrir esse ID.
-const UPLOADS_PLAYLIST_ID = `UU${CHANNEL_ID.slice(2)}`;
+// O feed RSS do YouTube é público e não precisa de API key/OAuth — só aceita
+// o channel_id (UC...), não o @handle.
+const FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
 
 let cachedVideo = null;
 let cachedAt = 0;
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutos
+
+function extractTag(xml, tag) {
+  const match = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
+  return match ? match[1] : null;
+}
+
+function decodeEntities(text) {
+  return text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
 
 export async function getLatestVideo() {
   if (cachedAt && Date.now() - cachedAt < CACHE_TTL_MS) {
     return cachedVideo;
   }
 
-  const apiKey = process.env.YOUTUBE_API_KEY;
-  if (!apiKey) {
-    throw new Error("YouTube ainda não configurado.");
-  }
-
-  const url = new URL("https://www.googleapis.com/youtube/v3/playlistItems");
-  url.searchParams.set("part", "snippet");
-  url.searchParams.set("playlistId", UPLOADS_PLAYLIST_ID);
-  url.searchParams.set("maxResults", "1");
-  url.searchParams.set("key", apiKey);
-
-  const res = await fetch(url);
-  const data = await res.json();
+  const res = await fetch(FEED_URL);
   if (!res.ok) {
-    throw new Error(data.error?.message || "Não foi possível buscar o vídeo mais recente do YouTube.");
+    throw new Error("Não foi possível buscar os vídeos do YouTube.");
   }
 
-  const item = data.items?.[0];
-  cachedVideo = item
+  const xml = await res.text();
+  const entryMatch = xml.match(/<entry>([\s\S]*?)<\/entry>/);
+  const entry = entryMatch?.[1];
+
+  cachedVideo = entry
     ? {
-        videoId: item.snippet.resourceId.videoId,
-        title: item.snippet.title,
-        publishedAt: item.snippet.publishedAt,
+        videoId: extractTag(entry, "yt:videoId"),
+        title: decodeEntities(extractTag(entry, "title") || ""),
+        publishedAt: extractTag(entry, "published"),
       }
     : null;
   cachedAt = Date.now();

@@ -179,32 +179,18 @@ disponível como alternativa — veja o código em `src/routes/angelis.js`.
 
 ## Conectando o YouTube
 
-Bem mais simples que o Instagram: não tem login nem OAuth, é só uma chave de
-API pra ler dados públicos do canal. A home mostra automaticamente o vídeo
-mais recente publicado em `youtube.com/@centroespiritadivaldofranco` — assim
-que sobe um vídeo novo, ele aparece no site sozinho (o cache dura só 30
-minutos).
+Não precisa de chave de API nem login: o backend lê o feed RSS público do
+canal (`youtube.com/feeds/videos.xml?channel_id=...`), que já vem certo por
+padrão no código para `@centroespiritadivaldofranco`. A home mostra
+automaticamente o vídeo mais recente — assim que sobe um vídeo novo, ele
+aparece no site sozinho (o cache dura só 30 minutos).
 
-1. Acesse o [Google Cloud Console](https://console.cloud.google.com/).
-2. Crie um projeto novo (ou use um existente) e ative a **YouTube Data API
-   v3**: menu "APIs e serviços" → "Biblioteca" → busque "YouTube Data API v3"
-   → "Ativar".
-3. Vá em "APIs e serviços" → "Credenciais" → "Criar credenciais" → "Chave de
-   API". Copie a chave gerada.
-4. (Recomendado) Clique em "Restringir chave" e limite o uso a "YouTube Data
-   API v3" — evita que a chave sirva pra outras APIs do Google por engano.
-5. No `.env` do backend (local) ou nas variáveis de ambiente do Render
-   (produção), defina:
-   ```
-   YOUTUBE_API_KEY="a-chave-que-voce-copiou"
-   ```
-   O `YOUTUBE_CHANNEL_ID` já vem certo por padrão (canal
-   @centroespiritadivaldofranco) — só precisa mudar se o canal do centro
-   mudar um dia.
-6. Reinicie o backend (ou aguarde o redeploy no Render). Teste:
-   `GET /api/youtube/latest` deve devolver `{ videoId, title, publishedAt }`
-   com os dados do vídeo mais recente.
+Só é preciso configurar algo se o canal mudar um dia: defina
+`YOUTUBE_CHANNEL_ID` nas variáveis de ambiente do backend com o novo ID do
+canal (não é o @handle — pegue em "Sobre o canal" → "Compartilhar canal" →
+"Copiar ID do canal").
 
-Se ainda não subiu nenhum vídeo no canal, ou a chave não estiver configurada,
-o endpoint responde vazio e a seção "Nosso canal" simplesmente não aparece na
-home — sem quebrar o layout.
+Teste: `GET /api/youtube/latest` deve devolver `{ videoId, title,
+publishedAt }` com os dados do vídeo mais recente. Se o canal ainda não tiver
+nenhum vídeo, o endpoint responde vazio e a seção "Nosso canal" simplesmente
+não aparece na home — sem quebrar o layout.
