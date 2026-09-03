@@ -13,6 +13,7 @@ export default function Footer() {
           <a href="/#sobre" className="hover:text-blue-400">Sobre</a>
           <a href="/#angelis" className="hover:text-blue-400">Ângelis</a>
           <a href="/#atividades" className="hover:text-blue-400">Atividades</a>
+          <a href="/#videos" className="hover:text-blue-400">Vídeos</a>
           <a href="/psicografias" className="hover:text-blue-400">Psicografias</a>
           <a href="/oracoes" className="hover:text-blue-400">Prece</a>
           <a href="/#contato" className="hover:text-blue-400">Localização</a>

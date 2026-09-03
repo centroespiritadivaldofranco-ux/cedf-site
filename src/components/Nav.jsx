@@ -6,6 +6,7 @@ const links = [
   { href: "/#sobre", label: "Sobre" },
   { href: "/#angelis", label: "Ângelis" },
   { href: "/#atividades", label: "Atividades" },
+  { href: "/#videos", label: "Vídeos" },
   { href: "/psicografias", label: "Psicografias" },
   { href: "/oracoes", label: "Prece" },
   { href: "/#contato", label: "Localização" },

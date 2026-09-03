@@ -5,6 +5,7 @@ import { oracoesRouter } from "./routes/oracoes.js";
 import { angelisRouter } from "./routes/angelis.js";
 import { ttsRouter } from "./routes/tts.js";
 import { cartasPsicografadasRouter } from "./routes/cartasPsicografadas.js";
+import { youtubeRouter } from "./routes/youtube.js";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api/oracoes", oracoesRouter);
 app.use("/api/angelis", angelisRouter);
 app.use("/api/tts", ttsRouter);
 app.use("/api/cartas-psicografadas", cartasPsicografadasRouter);
+app.use("/api/youtube", youtubeRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

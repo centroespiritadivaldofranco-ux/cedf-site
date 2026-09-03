@@ -28,6 +28,7 @@ npm run dev                              # roda em http://localhost:3002
 | PATCH | `/api/oracoes/:id` | `Authorization: Bearer <ADMIN_TOKEN>` | Marca `{ atendido: true }` depois que o nome for incluído nos trabalhos |
 | POST | `/api/tts` | pública (com limite de 60 pedidos/10min por IP) | Recebe `{ id, text, voiceName? }` e devolve o áudio (MP3) da leitura em voz alta |
 | GET | `/api/cartas-psicografadas` | pública | Lista as cartas psicografadas cadastradas no sistema da tesouraria, no formato usado por `/psicografias` |
+| GET | `/api/youtube/latest` | pública | Devolve o vídeo mais recente do canal (id, título, data), pra embedar na home |
 
 ## Conectando as cartas psicografadas ao sistema da tesouraria
 
@@ -175,3 +176,35 @@ método antigo — pode ignorar e seguir por aqui.
 Se preferir gerar o token manualmente (Graph API Explorer, método antigo, com
 Página do Facebook vinculada), o endpoint `POST /api/angelis/token` continua
 disponível como alternativa — veja o código em `src/routes/angelis.js`.
+
+## Conectando o YouTube
+
+Bem mais simples que o Instagram: não tem login nem OAuth, é só uma chave de
+API pra ler dados públicos do canal. A home mostra automaticamente o vídeo
+mais recente publicado em `youtube.com/@centroespiritadivaldofranco` — assim
+que sobe um vídeo novo, ele aparece no site sozinho (o cache dura só 30
+minutos).
+
+1. Acesse o [Google Cloud Console](https://console.cloud.google.com/).
+2. Crie um projeto novo (ou use um existente) e ative a **YouTube Data API
+   v3**: menu "APIs e serviços" → "Biblioteca" → busque "YouTube Data API v3"
+   → "Ativar".
+3. Vá em "APIs e serviços" → "Credenciais" → "Criar credenciais" → "Chave de
+   API". Copie a chave gerada.
+4. (Recomendado) Clique em "Restringir chave" e limite o uso a "YouTube Data
+   API v3" — evita que a chave sirva pra outras APIs do Google por engano.
+5. No `.env` do backend (local) ou nas variáveis de ambiente do Render
+   (produção), defina:
+   ```
+   YOUTUBE_API_KEY="a-chave-que-voce-copiou"
+   ```
+   O `YOUTUBE_CHANNEL_ID` já vem certo por padrão (canal
+   @centroespiritadivaldofranco) — só precisa mudar se o canal do centro
+   mudar um dia.
+6. Reinicie o backend (ou aguarde o redeploy no Render). Teste:
+   `GET /api/youtube/latest` deve devolver `{ videoId, title, publishedAt }`
+   com os dados do vídeo mais recente.
+
+Se ainda não subiu nenhum vídeo no canal, ou a chave não estiver configurada,
+o endpoint responde vazio e a seção "Nosso canal" simplesmente não aparece na
+home — sem quebrar o layout.
