@@ -1,4 +1,4 @@
-import { AtSign } from "lucide-react";
+import { InstagramIcon, YoutubeIcon } from "./BrandIcons";
 import Wordmark from "./Wordmark";
 
 export default function Footer() {
@@ -19,15 +19,26 @@ export default function Footer() {
           <a href="/#contato" className="hover:text-blue-400">Localização</a>
         </div>
 
-        <a
-          href="https://www.instagram.com/centroespiritadivaldofranco/"
-          target="_blank"
-          rel="noreferrer"
-          className="flex h-9 w-9 items-center justify-center border border-paper-0/20 text-paper-0 transition hover:border-blue-400 hover:text-blue-400"
-          aria-label="Instagram"
-        >
-          <AtSign size={16} />
-        </a>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://www.instagram.com/centroespiritadivaldofranco/"
+            target="_blank"
+            rel="noreferrer"
+            className="flex h-9 w-9 items-center justify-center border border-paper-0/20 transition hover:border-paper-0/40 hover:scale-105"
+            aria-label="Instagram"
+          >
+            <InstagramIcon size={18} />
+          </a>
+          <a
+            href="https://www.youtube.com/@centroespiritadivaldofranco"
+            target="_blank"
+            rel="noreferrer"
+            className="flex h-9 w-9 items-center justify-center border border-paper-0/20 transition hover:border-paper-0/40 hover:scale-105"
+            aria-label="YouTube"
+          >
+            <YoutubeIcon size={18} />
+          </a>
+        </div>
       </div>
       <p className="mt-8 text-center text-xs text-paper-0/40">
         © {new Date().getFullYear()} Centro Espírita Divaldo Franco · João Pessoa/PB

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SquarePlay } from "lucide-react";
+import { YoutubeIcon } from "./BrandIcons";
 import Reveal from "./Reveal";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3002";
@@ -56,7 +56,7 @@ export default function YoutubeLatest() {
             rel="noreferrer"
             className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-blue-500 transition hover:text-blue-600"
           >
-            <SquarePlay size={16} /> Ver mais vídeos no canal
+            <YoutubeIcon size={16} /> Ver mais vídeos no canal
           </a>
         </Reveal>
       </div>

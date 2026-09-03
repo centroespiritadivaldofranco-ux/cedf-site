@@ -1,4 +1,5 @@
-import { MapPin, AtSign, Clock3, ArrowUpRight } from "lucide-react";
+import { MapPin, Clock3, ArrowUpRight } from "lucide-react";
+import { InstagramIcon } from "./BrandIcons";
 import Reveal from "./Reveal";
 import { location, thursdaySchedule } from "../data/content";
 
@@ -55,7 +56,7 @@ export default function Localizacao() {
               className="flex items-center justify-between bg-navy-950 p-6 text-paper-0 transition hover:bg-blue-500"
             >
               <span className="flex items-center gap-3">
-                <AtSign size={20} />
+                <InstagramIcon size={20} />
                 <span className="text-sm font-bold">@centroespiritadivaldofranco</span>
               </span>
               <ArrowUpRight size={16} />

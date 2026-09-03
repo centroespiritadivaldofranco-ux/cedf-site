@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ArrowUpRight, ChefHat, AtSign, CalendarCheck, Copy, Check, Heart, Repeat } from "lucide-react";
+import { ArrowUpRight, ChefHat, CalendarCheck, Copy, Check, Heart, Repeat } from "lucide-react";
+import { InstagramIcon } from "./BrandIcons";
 import Reveal from "./Reveal";
 import AngelisFeed from "./AngelisFeed";
 import { angelis } from "../data/content";
@@ -44,7 +45,7 @@ export default function Angelis() {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 border border-navy-950/30 px-7 py-4 text-sm font-bold uppercase tracking-wide text-navy-950 transition hover:border-navy-950"
               >
-                <AtSign size={16} /> angelisrefeitorio
+                <InstagramIcon size={16} /> angelisrefeitorio
               </a>
             </Reveal>
           </div>
