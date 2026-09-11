@@ -45,7 +45,7 @@ export default function Hero() {
       <Reveal delay={220} className="mt-16 border-t border-navy-950/15">
         <div className="mx-auto grid max-w-6xl grid-cols-1 divide-y divide-navy-950/15 px-6 sm:grid-cols-3 sm:divide-x sm:divide-y-0 md:px-10">
           <div className="py-7 sm:pr-8">
-            <p className="font-display text-3xl font-semibold text-navy-950">Quintas, 20h</p>
+            <p className="font-display text-3xl font-semibold text-navy-950">Domingos, 16h</p>
             <p className="mt-1 text-sm text-navy-950/60">Palestras públicas</p>
           </div>
           <div className="py-7 sm:px-8">

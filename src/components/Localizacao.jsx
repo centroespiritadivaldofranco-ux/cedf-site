@@ -1,7 +1,7 @@
 import { MapPin, Clock3, ArrowUpRight } from "lucide-react";
 import { InstagramIcon } from "./BrandIcons";
 import Reveal from "./Reveal";
-import { location, thursdaySchedule } from "../data/content";
+import { location, sundaySchedule } from "../data/content";
 
 export default function Localizacao() {
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.mapsQuery)}`;
@@ -35,9 +35,9 @@ export default function Localizacao() {
 
             <div className="p-6">
               <Clock3 className="text-blue-500" size={22} />
-              <p className="mt-3 text-sm font-bold text-navy-950">Quintas-feiras</p>
+              <p className="mt-3 text-sm font-bold text-navy-950">Domingos</p>
               <ul className="mt-3 flex flex-col gap-3">
-                {thursdaySchedule.map((item) => (
+                {sundaySchedule.map((item) => (
                   <li key={item.title} className="flex gap-3">
                     <span className="w-12 flex-shrink-0 text-sm font-bold text-blue-500">{item.time}</span>
                     <span>

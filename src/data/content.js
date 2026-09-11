@@ -1,28 +1,28 @@
 export const activities = [
   {
     title: "Palestras públicas",
-    schedule: "Quintas-feiras, 20h",
+    schedule: "Domingos, 16h",
     description:
       "Encontros abertos a todos, sem necessidade de inscrição. Reflexão, acolhimento e conforto para quem busca respostas — seguidos de aplicação de passe.",
     icon: "Mic2",
   },
   {
     title: "Passe Magnético",
-    schedule: "Quintas-feiras, após a palestra",
+    schedule: "Domingos, 17h",
     description:
       "Aplicação de passe logo após a palestra: imposição das mãos para reequilíbrio das energias, um gesto simples de caridade espiritual aberto a todos os presentes.",
     icon: "Hand",
   },
   {
     title: "Hospital Espiritual",
-    schedule: "Quintas-feiras, 18h30 às 19h30",
+    schedule: "Domingos, 15h",
     description:
       "Atendimento espiritual: começa com acolhimento e atendimento fraterno e segue para o tratamento espiritual, conduzido com cuidado.",
     icon: "HeartPulse",
   },
   {
     title: "Atendimento fraterno",
-    schedule: "Quintas-feiras, 18h30",
+    schedule: "Domingos, 15h",
     description:
       "A primeira escuta antes do tratamento espiritual: uma conversa acolhedora para entender o que você está vivendo.",
     icon: "HeartHandshake",
@@ -103,10 +103,11 @@ export const angelis = {
   clubinhoUrl: "https://linktr.ee/projetoangelis",
 };
 
-export const thursdaySchedule = [
-  { time: "18h30", title: "Hospital Espiritual", note: "Acolhimento, atendimento fraterno e tratamento espiritual" },
-  { time: "18h30", title: "Atendimento fraterno", note: "Escuta acolhedora antes do tratamento espiritual" },
-  { time: "20h", title: "Palestra pública", note: "Aberta a todos, seguida de aplicação de passe" },
+export const sundaySchedule = [
+  { time: "15h", title: "Hospital Espiritual", note: "Acolhimento, atendimento fraterno e tratamento espiritual" },
+  { time: "15h", title: "Atendimento fraterno", note: "Escuta acolhedora antes do tratamento espiritual" },
+  { time: "16h", title: "Palestra pública", note: "Aberta a todos, seguida de aplicação de passe" },
+  { time: "17h", title: "Passe Magnético", note: "Imposição das mãos para reequilíbrio das energias" },
 ];
 
 export const location = {
