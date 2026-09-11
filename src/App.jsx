@@ -4,8 +4,11 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Psicografias from "./pages/Psicografias";
 import Oracoes from "./pages/Oracoes";
+import { useAnalyticsPageview } from "./hooks/useAnalyticsPageview";
 
 function App() {
+  useAnalyticsPageview();
+
   return (
     <div className="min-h-screen bg-paper-50">
       <Nav />
