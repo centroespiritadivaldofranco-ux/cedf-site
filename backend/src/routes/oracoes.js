@@ -53,3 +53,8 @@ oracoesRouter.patch("/:id", requireAdmin, async (req, res) => {
   });
   res.json(pedido);
 });
+
+oracoesRouter.delete("/:id", requireAdmin, async (req, res) => {
+  await prisma.pedidoOracao.delete({ where: { id: req.params.id } });
+  res.status(204).send();
+});
