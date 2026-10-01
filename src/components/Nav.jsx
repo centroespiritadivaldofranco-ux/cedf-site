@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { Menu, X, LogIn } from "lucide-react";
 import Wordmark from "./Wordmark";
 
+// Livraria virtual do CEDF (venda dos livros, como "O Holandês").
+const LIVRARIA_URL = "https://cedflivraria.lojavirtualnuvem.com.br/";
+
 const links = [
   { href: "/#sobre", label: "Sobre" },
   { href: "/#angelis", label: "Ângelis" },
@@ -10,6 +13,7 @@ const links = [
   { href: "/psicografias", label: "Psicografias" },
   { href: "/oracoes", label: "Prece" },
   { href: "/#contato", label: "Localização" },
+  { href: LIVRARIA_URL, label: "Livraria", externo: true },
 ];
 
 const PORTAL_URL = "https://portal.cedf.com.br/";
@@ -41,6 +45,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
+              {...(l.externo ? { target: "_blank", rel: "noreferrer", onClick: () => window.gtag?.("event", "clique_livraria", { local: "menu" }) } : {})}
               className="text-sm font-medium text-navy-950 transition hover:text-blue-500"
             >
               {l.label}
@@ -83,7 +88,8 @@ export default function Nav() {
               <a
                 key={l.href}
                 href={l.href}
-                onClick={() => setOpen(false)}
+                {...(l.externo ? { target: "_blank", rel: "noreferrer" } : {})}
+                onClick={() => { setOpen(false); if (l.externo) window.gtag?.("event", "clique_livraria", { local: "menu_mobile" }); }}
                 className="text-base font-medium text-navy-950"
               >
                 {l.label}
