@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Psicografias from "./pages/Psicografias";
 import Oracoes from "./pages/Oracoes";
+import Livraria from "./pages/Livraria";
 import { useAnalyticsPageview } from "./hooks/useAnalyticsPageview";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/psicografias" element={<Psicografias />} />
         <Route path="/oracoes" element={<Oracoes />} />
+        <Route path="/livraria" element={<Livraria />} />
       </Routes>
       <Footer />
     </div>

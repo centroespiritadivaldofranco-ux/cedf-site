@@ -17,15 +17,7 @@ export default function Footer() {
           <a href="/psicografias" className="hover:text-blue-400">Psicografias</a>
           <a href="/oracoes" className="hover:text-blue-400">Prece</a>
           <a href="/#contato" className="hover:text-blue-400">Localização</a>
-          <a
-            href="https://cedflivraria.lojavirtualnuvem.com.br/"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => window.gtag?.("event", "clique_livraria", { local: "rodape" })}
-            className="hover:text-blue-400"
-          >
-            Livraria
-          </a>
+          <a href="/livraria" className="hover:text-blue-400">Livraria</a>
         </div>
 
         <div className="flex items-center gap-3">
