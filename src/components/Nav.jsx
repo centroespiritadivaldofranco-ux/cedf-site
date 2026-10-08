@@ -11,6 +11,7 @@ const links = [
   { href: "/oracoes", label: "Prece" },
   { href: "/#contato", label: "Localização" },
   { href: "/livraria", label: "Livraria" },
+  { href: "/estudo", label: "Estudo" },
 ];
 
 const PORTAL_URL = "https://portal.cedf.com.br/";

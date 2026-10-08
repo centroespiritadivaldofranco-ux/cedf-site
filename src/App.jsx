@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Psicografias from "./pages/Psicografias";
 import Oracoes from "./pages/Oracoes";
 import Livraria from "./pages/Livraria";
+import Estudo from "./pages/Estudo";
 import { useAnalyticsPageview } from "./hooks/useAnalyticsPageview";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/psicografias" element={<Psicografias />} />
         <Route path="/oracoes" element={<Oracoes />} />
         <Route path="/livraria" element={<Livraria />} />
+        <Route path="/estudo" element={<Estudo />} />
       </Routes>
       <Footer />
     </div>

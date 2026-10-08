@@ -18,6 +18,7 @@ export default function Footer() {
           <a href="/oracoes" className="hover:text-blue-400">Prece</a>
           <a href="/#contato" className="hover:text-blue-400">Localização</a>
           <a href="/livraria" className="hover:text-blue-400">Livraria</a>
+          <a href="/estudo" className="hover:text-blue-400">Estudo</a>
         </div>
 
         <div className="flex items-center gap-3">
