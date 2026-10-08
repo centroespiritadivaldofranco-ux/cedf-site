@@ -28,24 +28,48 @@ export default function Estudo() {
               <Reveal delay={60} as="p" className="mt-2 max-w-2xl text-base leading-relaxed text-navy-950/65">
                 {grupo.descricao}
               </Reveal>
-              <ul className="mt-6 divide-y divide-navy-950/15 border-y border-navy-950/15">
-                {grupo.itens.map((item) => (
-                  <li key={item.link}>
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => registrarCliqueEstudo(item.titulo)}
-                      className="group flex items-center justify-between gap-6 py-4 text-navy-950 transition hover:text-blue-500"
-                    >
-                      <span className="text-base font-medium md:text-lg">{item.titulo}</span>
-                      <span className="flex flex-shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-wide text-navy-950/55 group-hover:text-blue-500">
-                        PDF <Download size={16} />
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {grupo.itens.every((i) => i.capa) ? (
+                <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+                  {grupo.itens.map((item) => (
+                    <li key={item.link}>
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => registrarCliqueEstudo(item.titulo)}
+                        className="group block"
+                      >
+                        <div className="border border-navy-950/10 bg-paper-0 p-2 shadow-[0_14px_30px_-16px_rgba(10,14,42,0.35)] transition group-hover:-translate-y-1">
+                          <img src={item.capa} alt={`Capa: ${item.titulo}`} className="block h-auto w-full" loading="lazy" />
+                        </div>
+                        <p className="mt-3 text-sm font-semibold leading-snug text-navy-950 group-hover:text-blue-500 md:text-base">{item.titulo}</p>
+                        <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-navy-950/55 group-hover:text-blue-500">
+                          Baixar PDF <Download size={14} />
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ul className="mt-6 divide-y divide-navy-950/15 border-y border-navy-950/15">
+                  {grupo.itens.map((item) => (
+                    <li key={item.link}>
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => registrarCliqueEstudo(item.titulo)}
+                        className="group flex items-center justify-between gap-6 py-4 text-navy-950 transition hover:text-blue-500"
+                      >
+                        <span className="text-base font-medium md:text-lg">{item.titulo}</span>
+                        <span className="flex flex-shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-wide text-navy-950/55 group-hover:text-blue-500">
+                          PDF <Download size={16} />
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
           ))}
         </div>

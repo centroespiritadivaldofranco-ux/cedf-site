@@ -3,7 +3,6 @@
 // do grupo desejado (ou crie um grupo novo).
 
 const FEB = "https://www.febnet.org.br/portal/wp-content/uploads/";
-const FEB_ANTIGO = "https://www.febnet.org.br/wp-content/uploads/";
 
 export const PAGINA_FEB = "https://www.febnet.org.br/portal/2022/02/28/orientacao-ao-centro-espirita/";
 
@@ -13,15 +12,15 @@ export const grupos = [
     titulo: "Orientação ao Centro Espírita",
     descricao: "Documentos orientadores da FEB para o estudo, a prática e a divulgação da Doutrina Espírita na casa espírita.",
     itens: [
-      { titulo: "Orientação ao Centro Espírita", link: FEB + "2021/01/WEB-Orientação-ao-Centro-Espírita.pdf" },
-      { titulo: "Orientação à Ação Evangelizadora Espírita da Infância", link: FEB + "2019/07/WEB-Orientação-AEE-Infância-1.pdf" },
-      { titulo: "Orientação à Ação Evangelizadora Espírita da Juventude", link: FEB + "2019/07/WEB-Orientação-à-Ação-Evangelizadora-Espírita-da-Juventude.pdf" },
-      { titulo: "Orientação para a prática mediúnica no Centro Espírita", link: FEB + "2019/07/WEB-Orientação-para-a-prática-mediúnica-no-Centro-Espírita-1.pdf" },
-      { titulo: "Orientação à Assistência e Promoção Social Espírita", link: FEB + "2019/07/WEB-Orientação-a-Assistencia-e-Promocao-Social-Espirita.pdf" },
-      { titulo: "Orientação para o Atendimento Espiritual no Centro Espírita", link: FEB + "2019/07/Orientação-para-o-Atendimento-Espiritual-no-Centro-Espírita.pdf" },
-      { titulo: "Orientação à Comunicação Social Espírita", link: FEB + "2019/07/WEB-Orientação-a-comunicação-social-espirita.pdf" },
-      { titulo: "O livro espírita e a sustentabilidade do Movimento Espírita", link: FEB + "2019/07/WEB-O-livro-espirita-e-a-sustentabilidade-do-movimento-espirita-2.pdf" },
-      { titulo: "Orientação para a assistência espírita nos sistemas penais", link: FEB + "2019/07/WEBOrientacaoparaassistenciaespiritanossistemaspenais-2.pdf" },
+      { titulo: "Orientação ao Centro Espírita", capa: "/capas-estudo/oce.png", link: FEB + "2021/01/WEB-Orientação-ao-Centro-Espírita.pdf" },
+      { titulo: "Orientação à Ação Evangelizadora Espírita da Infância", capa: "/capas-estudo/infancia.jpg", link: FEB + "2019/07/WEB-Orientação-AEE-Infância-1.pdf" },
+      { titulo: "Orientação à Ação Evangelizadora Espírita da Juventude", capa: "/capas-estudo/juventude.jpg", link: FEB + "2019/07/WEB-Orientação-à-Ação-Evangelizadora-Espírita-da-Juventude.pdf" },
+      { titulo: "Orientação para a prática mediúnica no Centro Espírita", capa: "/capas-estudo/mediunica.jpg", link: FEB + "2019/07/WEB-Orientação-para-a-prática-mediúnica-no-Centro-Espírita-1.pdf" },
+      { titulo: "Orientação para o Atendimento Espiritual no Centro Espírita", capa: "/capas-estudo/atendimento.jpg", link: FEB + "2019/07/Orientação-para-o-Atendimento-Espiritual-no-Centro-Espírita.pdf" },
+      { titulo: "Orientação à Comunicação Social Espírita", capa: "/capas-estudo/comunicacao.jpg", link: FEB + "2019/07/WEB-Orientação-a-comunicação-social-espirita.pdf" },
+      { titulo: "O livro espírita e a sustentabilidade do Movimento Espírita", capa: "/capas-estudo/livro-espirita.jpg", link: FEB + "2019/07/WEB-O-livro-espirita-e-a-sustentabilidade-do-movimento-espirita-2.pdf" },
+      { titulo: "Orientação para a Área de Estudo do Espiritismo", capa: "/capas-estudo/estudo-espiritismo.jpg", link: FEB + "2019/07/Orienta.pdf" },
+      { titulo: "Orientação para a assistência espírita nos sistemas penais", capa: "/capas-estudo/sistemas-penais.png", link: FEB + "2019/07/WEBOrientacaoparaassistenciaespiritanossistemaspenais-2.pdf" },
     ],
   },
   {
@@ -29,10 +28,10 @@ export const grupos = [
     titulo: "Atividades virtuais",
     descricao: "Recomendações para reuniões e atividades on-line na casa espírita.",
     itens: [
-      { titulo: "Recomendações para a organização de reuniões virtuais", link: FEB + "2021/01/Recomendações-para-organização-de-reuniões-virtuais-1.pdf" },
-      { titulo: "Recomendações para os participantes de reuniões", link: FEB + "2021/01/Recomendações-para-os-participantes-de-reuniões.pdf" },
-      { titulo: "Check-list de segurança em reuniões virtuais (Zoom)", link: FEB + "2021/01/Check-List-para-segurança-em-Reuniões-Virtuais-zoom.pdf" },
-      { titulo: "Check-list de segurança em reuniões virtuais (Jitsi)", link: FEB + "2021/01/Check-List-para-segurança-em-Reuniões-Virtuais-Jitsi.pdf" },
+      { titulo: "Recomendações para a organização de reuniões virtuais", capa: "/capas-estudo/reunioes-organizacao.png", link: FEB + "2021/01/Recomendações-para-organização-de-reuniões-virtuais-1.pdf" },
+      { titulo: "Recomendações para os participantes de reuniões", capa: "/capas-estudo/reunioes-participantes.png", link: FEB + "2021/01/Recomendações-para-os-participantes-de-reuniões.pdf" },
+      { titulo: "Check-list de segurança em reuniões virtuais (Zoom)", capa: "/capas-estudo/checklist-zoom.png", link: FEB + "2021/01/Check-List-para-segurança-em-Reuniões-Virtuais-zoom.pdf" },
+      { titulo: "Check-list de segurança em reuniões virtuais (Jitsi)", capa: "/capas-estudo/checklist-jitsi.png", link: FEB + "2021/01/Check-List-para-segurança-em-Reuniões-Virtuais-Jitsi.pdf" },
     ],
   },
   {
@@ -51,20 +50,11 @@ export const grupos = [
   },
   {
     id: "opusculos",
-    titulo: "Opúsculos e livretos",
+    titulo: "Opúsculos e cartilhas",
     descricao: "Textos curtos, ótimos para ler com calma ou distribuir na casa.",
     itens: [
-      { titulo: "Família, vida e paz", link: FEB + "2019/07/WEB-Familia-vida-e-paz.pdf" },
-      { titulo: "Consciência ecológica", link: FEB + "2022/12/WEB-conscienciaecologica-26-06-23.pdf" },
-      { titulo: "O Evangelho no Lar e no Coração", link: FEB_ANTIGO + "2012/11/O-Evangelho-no-Lar-e-no-Coracao-Livreto.pdf" },
-      { titulo: "Viver em família", link: FEB_ANTIGO + "2012/11/Viver-em-familia-Livreto.pdf" },
-      { titulo: "Construamos a Paz", link: FEB_ANTIGO + "2012/11/Construamos-a-Paz-Livreto.pdf" },
-      { titulo: "Aborto (livreto)", link: FEB_ANTIGO + "2012/11/Livreto-Aborto.pdf" },
-      { titulo: "Aborto (cartilha)", link: FEB_ANTIGO + "2019/04/CARTILHA-ABORTO-A4-FEB.pdf" },
-      { titulo: "Drogas", link: FEB_ANTIGO + "2012/11/Livreto-Drogas.pdf" },
-      { titulo: "Eutanásia", link: FEB_ANTIGO + "2012/11/Livreto-Eutanasia.pdf" },
-      { titulo: "Suicídio", link: FEB_ANTIGO + "2012/11/Livreto-Suicidio.pdf" },
-      { titulo: "Violência", link: FEB_ANTIGO + "2012/11/Livreto-Violencia.pdf" },
+      { titulo: "Família, vida e paz", capa: "/capas-estudo/familia-vida-paz.jpg", link: FEB + "2019/07/WEB-Familia-vida-e-paz.pdf" },
+      { titulo: "Consciência ecológica", capa: "/capas-estudo/consciencia-ecologica.jpg", link: FEB + "2022/12/WEB-conscienciaecologica-26-06-23.pdf" },
     ],
   },
 ];
