@@ -33,12 +33,12 @@ export default function Nav() {
         scrolled || open ? "border-navy-950/10 bg-paper-50/95 backdrop-blur" : "border-transparent bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 md:px-10">
         <a href="/">
           <Wordmark size="sm" />
         </a>
 
-        <div className="hidden items-center gap-9 md:flex">
+        <div className="hidden items-center gap-6 xl:flex">
           {links.map((l) => (
             <a
               key={l.href}
@@ -70,7 +70,7 @@ export default function Nav() {
         </div>
 
         <button
-          className="text-navy-950 md:hidden"
+          className="text-navy-950 xl:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Abrir menu"
         >
@@ -79,7 +79,7 @@ export default function Nav() {
       </nav>
 
       {open && (
-        <div className="border-t border-navy-950/10 bg-paper-50 px-6 pb-6 pt-2 md:hidden">
+        <div className="border-t border-navy-950/10 bg-paper-50 px-6 pb-6 pt-2 xl:hidden">
           <div className="flex flex-col gap-4">
             {links.map((l) => (
               <a
